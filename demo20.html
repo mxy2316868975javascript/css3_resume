@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>3D Poster</title>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css">
+        <style type="text/css">
+        body{
+            background-color: #fbc73b;
+            background-image: url(http://img1.ph.126.net/1mDRyOcZivzC22xLC7oW1g==/1158269529265800886.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: 'Lato', Arial, sans-serif;
+            color: #fff;
+        }
+        #header{
+            margin:0 auto;
+            padding:2em;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        #wrapper{
+            margin: 0 auto 100px auto;
+            max-width: 1060px;
+        }
+        .stage{
+            list-style: none;
+            padding:0;
+            overflow:hidden;
+            <!--触发BFC，清除浮动-->
+        }
+        .scene{
+            width: 260px;
+            height: 410px;
+            margin: 30px 40px;
+            float: left;
+            perspective: 1000px;
+        }
+        .movie {
+            width: 260px;
+            height: 400px;
+            transform-style: preserve-3d;
+            transform: translateZ(-130px);
+            transition: transform 350ms;
+        }
+        .movie:hover{
+            transform:rotateY(-76deg) translateZ(20px);
+        }
+        .movie .poster,
+        .movie .info {
+            position: absolute;
+            width: 260px;
+            height: 400px;
+            background-color: #fff;
+            backface-visibility: hidden;
+        }
+
+        .movie .poster  {
+            transform: translateZ(130px);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .movie .info {
+            transform: rotateY(90deg) translateZ(130px);
+            border: 1px solid #B8B5B5;
+            font-size: 0.75em;
+        }
+
+
+
+
+
+        /*************************************
+        Shadow beneath the 3D object
+        **************************************/
+        .movie::after {
+            content: '';
+            width: 260px;
+            height: 260px;
+            position: absolute;
+            bottom: 0;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.4);
+            transform-origin: 100% 100%;
+            transform: rotateX(90deg) translateY(130px);
+            transition: box-shadow 350ms;
+        }
+
+        .movie:hover::after {
+            box-shadow: 20px -5px 50px rgba(0,0,0,0.3);
+        }
+
+        /*************************************
+        Movie information
+        **************************************/
+        .info header {
+            color: #FFF;
+            padding: 7px 10px;
+            font-weight: bold;
+            height: 195px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            text-shadow: 0px 1px 1px rgba(0,0,0,1);
+        }
+
+        .info header h1 {
+            margin: 0 0 2px;
+            font-size: 1.4em;
+        }
+
+        .info header .rating {
+            border: 1px solid #FFF;
+            padding: 0px 3px;
+        }
+
+        .info p {
+            padding: 1em 1.4em;
+            margin: 2px 0 0;
+            font-weight: 500;
+            color: #666;
+            line-height: 1.3em;
+            border-top: 10px solid #555;
+        }
+        /*************************************
+        Generate "lighting" using box shadows
+        **************************************/
+        .movie .poster,
+        .movie .info,
+        .movie .info header {
+            transition: box-shadow 350ms;
+        }
+
+        .movie .poster {
+            box-shadow: inset 0px 0px 40px rgba(255,255,255,0);
+        }
+
+        .movie:hover .poster {
+            box-shadow: inset 300px 0px 40px rgba(255,255,255,0.8);
+        }
+
+        .movie .info,
+        .movie .info header {
+            box-shadow: inset -300px 0px 40px rgba(0,0,0,0.7);
+        }
+
+        .movie:hover .info,
+        .movie:hover .info header {
+            box-shadow: inset 0px 0px 40px rgba(0,0,0,0);
+        }
+
+
+        /*************************************
+        Posters and still images
+        **************************************/
+        .scene:nth-child(1) .poster {
+          background-image: url(http://img2.ph.126.net/cnU2FfffqzubEJdsHPuGHg==/4880213146310056535.jpg);
+        }
+
+        .scene:nth-child(2) .poster {
+          background-image: url(http://img2.ph.126.net/FZ4lq6PMw-QJyK9ktSLlRw==/6598081317416080361.jpg);
+        }
+
+        .scene:nth-child(3) .poster {
+          background-image: url(http://img1.ph.126.net/bg5S4PqdX3izu7glbhDoPw==/6598159382741657998.jpg);
+        }
+
+        .scene:nth-child(1) .info header {
+            background-image: url(http://img1.ph.126.net/oKwbUz2FRfVC1w9XnD8C_Q==/1997627909817785515.jpg);
+        }
+
+        .scene:nth-child(2) .info header {
+            background-image: url(http://img0.ph.126.net/jaJ5V7RSmfSKzdgVdh64iQ==/6598251741718381356.jpg);
+        }
+
+        .scene:nth-child(3) .info header {
+            background-image: url(http://img2.ph.126.net/OmYpqwM33qvNITlO9aGzgA==/1994250210096922538.jpg);
+        }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <header id="header">
+                <h1>Vampire Diaries</h1>
+                <span>character profile</span>
+            </header>
+            <!-- /header -->
+            <div id="wrapper">
+                <ul class="stage">
+                    <li class="scene">
+                        <div class="movie" onclick="return true">
+                            <div class="poster"></div>
+                            <div class="info">
+                                <header>
+                                    <h1>My favorite-Damon</h1>
+                                    <span class="year">1864</span>
+                                    <span class="rating">SSS</span>
+                                    <span class="duration">145 years</span>
+                                </header>
+                                <p>
+                                    1864年给情人凯瑟琳·皮尔斯转变成吸血鬼，145年来都痴心的爱着凯瑟琳，知道凯瑟琳并不在乎自己的时候十分愤怒。其实是个痴情的傻瓜，冷酷的外表下还有一颗善良的心。他爱着埃琳娜却没告诉她，担心造成埃琳娜的困扰。他做着各种旁人看起来邪恶而疯狂的事情，但是很在乎亲人和朋友，嘴巴上不在乎，可是总是在斯特凡和埃琳娜他们受到危险时挺身而出。
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- /poster1 -->
+                    <li class="scene">
+                        <div class="movie" onclick="return true">
+                            <div class="poster"></div>
+                            <div class="info">
+                                <header>
+                                    <h1>Heroine-Elena</h1>
+                                    <span class="year">xxxx</span>
+                                    <span class="rating">S</span>
+                                    <span class="duration">10 years</span>
+                                </header>
+                                <p>
+                                    她勇敢善良，在乎自己的朋友和家人，不希望自己家人、朋友因为自己而身处险境，勇于与恶势力作斗争。无处不在的威胁让她慢慢成长和强大。第一季中18岁，第三季结尾因丽贝卡的阻碍和马特掉入河中，斯特凡赶到时遵循埃琳娜的意愿救马特，第四季变成吸血鬼。原与斯特凡相爱，后对达蒙产生好感，第四季因认祖归宗放大对达蒙的感情，与达蒙相爱。她是阿玛拉的N代二重身。
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- /poster2 -->
+                    <li class="scene">
+                        <div class="movie" onclick="return true">
+                            <div class="poster"></div>
+                            <div class="info">
+                                <header>
+                                    <h1>Cool Man-Nicholas</h1>
+                                    <span class="year">xxxx</span>
+                                    <span class="rating">SS</span>
+                                    <span class="duration">NaN</span>
+                                </header>
+                                <p>
+                                    全称尼克劳斯，第二季出现的新人物，是最古老的吸血鬼之一，也拥有狼人的血统，他在第三季用埃琳娜的血液去制造了许多的混血，泰勒是第一个被他成功制造的混血。他所做一切只是为了使自己不再孤单，所以不断制造混血，后来让自己的家人醒来。
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- /poster3 -->
+                </ul>
+            </div>
+            <!-- /wrapper -->
+        </div>
+    </body>
+</html>
